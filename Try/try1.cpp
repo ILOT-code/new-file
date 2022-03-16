@@ -1,64 +1,40 @@
-#include <cstdio>
-#include <algorithm>
-using namespace std;
-bool cmp(char a,char b)
-{return a>b;}
-int const M=80+10;
-int main()
-{
-    int n,i=0;
-    char s[M];
-    scanf("%d",&n);
-    getchar();
-    gets(s);
-    while(s[i]!=0)
-    {
-        if(!((s[i]>='0'&&s[i]<='9')||(s[i]>='a'&&s[i]<='z')||(s[i]>='A'&&s[i]<='Z')))
-        {
-            int t=i;
-            while(s[t]!=0)
-                {
-                    s[t]=s[t+1];
-                    ++t;
+#include<cstdio>
+#include<cstring>
 
-                };
-        }
-        else i++;
-    };
-    i=0;
-    while(s[i]!=0)
-    {
-        if(s[i]>='A'&&s[i]<='Z') s[i]+=32;
-        else if(s[i]>='a'&&s[i]<='z') s[i]-=32;
-        ++i;
-    };
-    i=0;
-    while(s[i]!=0)
-    {
-        int t=i+1;
-        while(s[t]!=0)
-        {
-            if(s[t]==s[i])
-            {
-                 int j=t;
-                  while(s[j]!=0)
-                {
-                    s[j]=s[j+1];
-                    ++j;
+const int len = 32;
+const int maxn = 1024 + 10;
+char s[maxn];
+int buf[len][len], cnt;
 
-                };
-            }
-            ++t;
-        };
-        ++i;
-    };
-    sort(s,s+i,cmp);
-    for(;n>0;--n)
-   {
-       for(int j=0;j<i;++j)
-        printf("%c",s[j]);
-   }
-   return 0;
+// 把字符串s[p..]导出到以(r,c)为左上角，边长为w的缓冲区中
+// 2 1
+// 3 4
+void draw(const char* s, int& p, int r, int c, int w) {
+  char ch = s[p++];
+  if(ch == 'p') {
+    draw(s, p, r,     c+w/2, w/2); // 1
+    draw(s, p, r,     c    , w/2); // 2
+    draw(s, p, r+w/2, c    , w/2); // 3
+    draw(s, p, r+w/2, c+w/2, w/2); // 4
+  } else if(ch == 'f') { // 画黑像素（白像素不画）
+    for(int i = r; i < r+w; i++)
+      for(int j = c; j < c+w; j++)
+       if(buf[i][j] == 0) { buf[i][j] = 1; cnt++; }
+  }
 }
 
-
+int main() {
+  int T;
+  scanf("%d", &T);
+  while(T--) {
+    memset(buf, 0, sizeof(buf));
+    cnt = 0;
+    for(int i = 0; i < 2; i++) {
+      scanf("%s", s);
+      int p = 0;
+      draw(s, p, 0, 0, len);
+    }
+    printf("There are %d black pixels.\n", cnt);
+  }
+  return 0;
+}

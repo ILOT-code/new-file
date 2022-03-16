@@ -1,3 +1,6 @@
+//ope=4时需要额外修正
+//int 数据在极端情况下不够用
+//此份代码可以利用函数简化很多
 #include <cstdio>
 using namespace std;
 const int maxn=100005;
