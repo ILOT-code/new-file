@@ -1,51 +1,52 @@
-#include <iostream>
+// UVa10129 Play on Words
+// Rujia Liu
+// 题意：输入n个单词，是否可以排成一个序列，使得每个单词的第一个字母和上一个单词的最后一个字母相同
+// 算法：把字母看作结点，单词看成有向边，则有解当且仅当图中有欧拉路径。注意要先判连通
+#include<cstdio>
+#include<cstring>
+#include<vector>
 using namespace std;
-typedef struct LNode{
-    int data;
-    struct LNode *next;
-}LNode,*LinkList;
-int i=0;
 
-LinkList add(LinkList P1,LinkList P2,LinkList Pbefore=NULL){
-    if(P2==NULL&&P1==NULL){
-        return Pbefore;
+const int maxn = 1000 + 5;
+
+// 并查集（代码摘自《算法竞赛入门经典——训练指南》第三章）
+int pa[256];
+int findset(int x) { return pa[x] != x ? pa[x] = findset(pa[x]) : x; } 
+
+int used[256], deg[256]; // 是否出现过；度数
+
+int main() {
+  int T;
+  scanf("%d", &T);
+  while(T--) {
+    int n;
+    char word[maxn];
+
+    scanf("%d", &n);
+    memset(used, 0, sizeof(used));
+    memset(deg, 0, sizeof(deg));
+    for(int ch = 'a'; ch <= 'z'; ch++) pa[ch] = ch; // 初始化并查集
+    int cc = 26; // 连通块个数
+
+    for(int i = 0; i < n; i++) {
+      scanf("%s", word);
+      char c1 = word[0], c2 = word[strlen(word)-1];
+      deg[c1]++;
+      deg[c2]--;
+      used[c1] = used[c2] = 1;
+      int s1 = findset(c1), s2 = findset(c2);
+      if(s1 != s2) { pa[s1] = s2; cc--; }
     }
-    if(P2==NULL){
-      return add(P2,P1,Pbefore);
+
+    vector<int> d;
+    for(int ch = 'a'; ch <= 'z'; ch++) {
+      if(!used[ch]) cc--; // 没出现过的字母
+      else if(deg[ch] != 0) d.push_back(deg[ch]);
     }
-    if(P1==NULL){
-        LinkList P=P2->next;
-        P2->next=Pbefore;
-        return add(P1,P,P2);
-    }
-    if(P1->data<=P2->data){
-        LinkList P=P1->next;
-        P1->next=Pbefore;
-        return add(P,P2,P1);
-        
-    }
-    else return add(P2,P1,Pbefore);
-}
-int main(){
-  LinkList Pa,Pa1,Pa2,Pa3,Pa4;
-  LinkList Pb,Pb1,Pb2,Pb3;
-  Pa=(LinkList)malloc(sizeof(LNode));
-  Pa1=(LinkList)malloc(sizeof(LNode));
-  Pa2=(LinkList)malloc(sizeof(LNode));
-  Pa3=(LinkList)malloc(sizeof(LNode));
-  Pa4=(LinkList)malloc(sizeof(LNode));
-  Pb=(LinkList)malloc(sizeof(LNode));
-  Pb1=(LinkList)malloc(sizeof(LNode));
-  Pb2=(LinkList)malloc(sizeof(LNode));
-  Pb3=(LinkList)malloc(sizeof(LNode));
-  Pa->next=Pa1; Pa1->next=Pa2; Pa2->next=Pa3; Pa3->next=Pa4;Pa4->next=NULL;
-  Pb->next=Pb1; Pb1->next=Pb2; Pb2->next=Pb3; Pb3->next=NULL;
-  Pa1->data=1;Pa2->data=3;Pa3->data=5;Pa4->data=5;
-  Pb1->data=2;Pb2->data=4;Pb3->data=6;
-  LinkList t=add(NULL,Pb1);
-  while(t!=NULL){
-    cout<<t->data;
-    t=t->next;
+    bool ok = false;
+    if(cc == 1 && (d.empty() || (d.size() == 2 && (d[0] == 1 || d[0] == -1)))) ok = true;
+    if(ok) printf("Ordering is possible.\n");
+    else printf("The door cannot be opened.\n");
   }
   return 0;
 }

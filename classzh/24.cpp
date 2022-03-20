@@ -41,5 +41,4 @@ int main(){
     dele(head);
     output(head);
     return 0;
-    
 }
