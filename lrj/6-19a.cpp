@@ -1,3 +1,6 @@
+//实际上，多出的本不存在边并不会影响原图中环的存在性，因此可以忽略它们，把标记用的d数组省略掉；
+//另外 输入格式并不正确，可以简化；
+//ID 与 couple 可以简化；
 #include <cstdio>
 using namespace std;
 const int maxn = 52;
