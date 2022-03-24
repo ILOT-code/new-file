@@ -1,3 +1,5 @@
+//accepted
+//注意输出格式 不能多一个空格
 #include <cstdio>
 #include <queue>
 #include <cstring>
@@ -35,6 +37,7 @@ void rev_bfs(){
 void bfs(){
     memset(vis, 0, sizeof(vis));
     vector<int> next;
+    ans.clear();
     vis[0] = 1;
     next.push_back(0);
     for (int i = 0; i < d[0]; ++i){
@@ -65,8 +68,8 @@ void bfs(){
         next = next2;
     }
     printf("%d\n", ans.size());
-    for (int i = 0; i < ans.size(); ++i)
-        printf("%d ", ans[i]);
+    printf("%d", ans[0]);
+    for(int i = 1; i < ans.size(); i++) printf(" %d", ans[i]);
     printf("\n");
 }
 void clean(){
@@ -80,7 +83,7 @@ void addedge(int u, int v, int c){
     G[u].push_back(ix);
 }
 int main(){
-    int n, m, u, v, c;
+    int  m, u, v, c;
     while (scanf("%d%d", &n, &m) == 2){
         clean();
         while (m--){

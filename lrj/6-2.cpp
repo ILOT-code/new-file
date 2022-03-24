@@ -1,3 +1,4 @@
+//输入格式与OJ上是不一样的；
 #include<cstdio>
 using namespace std;
 const int maxn=1000+5;
