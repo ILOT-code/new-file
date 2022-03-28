@@ -3,7 +3,7 @@
 using namespace std;
 class Rectangle{
     private:
-    double m_length,m_width;
+    double m_length=1,m_width=1;
     public:
     double Perimeter(){
         return 2*(m_length+m_width);

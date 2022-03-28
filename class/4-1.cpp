@@ -1,8 +1,9 @@
 #include <iostream>
 using namespace std;
-typedef struct{
+class rectangle{
+    public:
     int a[2],b[2];
-}rectangle;
+};
 int calculate(int x1,int x2,int x3,int x4){
     if(x3<x1)        return calculate(x3,x4,x1,x2);
     if(x3>=x2)       return 0;

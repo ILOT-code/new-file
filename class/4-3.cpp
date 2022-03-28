@@ -15,11 +15,6 @@ class Matrix{
         for(int i=0;i<row;++i) delete []data[i];
         delete []data;
     }
-    void Matrix_ass(){
-        for(int i=0;i<row;++i)
-        for(int j=0;j<col;++j)
-        cin>>data[i][j];
-    }
     double table(int i,int j) { return data[i][j];}
     Matrix& operator+=(const Matrix& p){
         if(row!=p.row||col!=p.col){ flag=0; return *this; }
@@ -48,6 +43,12 @@ class Matrix{
         data[i][j]=p.data[i][j];
         return *this;
     }
+    friend istream& operator>>(istream& input,Matrix &p){
+        for(int i=0;i<p.row;++i)
+        for(int j=0;j<p.col;++j)
+        input>>p.data[i][j];
+        return input;
+    }
     friend ostream& operator<<(ostream& output,Matrix &p){
         if(p.flag){
             for(int i=0;i<p.row;++i){
@@ -61,8 +62,8 @@ class Matrix{
 };
 int main(){
     int row1,col1,row2,col2;
-    cin>>row1>>col1;Matrix a(row1,col1); a.Matrix_ass();
-    cin>>row2>>col2;Matrix b(row2,col2); b.Matrix_ass();
+    cin>>row1>>col1;Matrix a(row1,col1); cin>>a;
+    cin>>row2>>col2;Matrix b(row2,col2); cin>>b;
     cout<<a.table(row1/2,col1/2)<<endl;
     cout<<(a*=b);
     cout<<(a+=b);
