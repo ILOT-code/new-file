@@ -39,15 +39,12 @@ int main(){
                     ope.pop();
                 }while(id(ope.top())>=id(s[i]));
                 ope.push(s[i]);
-               
             }
         }
     }
     while(ope.top()!='#'){
         cout<<ope.top()<<" ";
         ope.pop();
-
     }
-    
     return 0;
 }
