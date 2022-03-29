@@ -16,15 +16,16 @@ const int width = 100;                //格子宽度100米
 const int maxn = 100;                 //大小限制
 const int actions[]={-2,-1,0,1,2};    //运动，-2表示沿着无人机方向逆时针旋转90度运动，以此类推
 const int directions[]={0,1,2,3};     //方向，上右下左；
-const int dr[]={-1,0,1,0};
-const int dc[]={0,1,0,-1};
-const double rate = 0.5;
-const double greedy = 0.6;
+const int dr[]={-1,0,1,0};            //行随方向的变化
+const int dc[]={0,1,0,-1};            //列随方向的变化
+const double rate = 0.5;              //马可洛夫决策过程的比例系数，不易过大
+const double greedy = 0.6;            //贪心系数
 int r_start,c_start,h_start,direction_start;           //初始状态
 int r,c,h,direction;               //无人机当前状态
-int r_end,c_end;                         //无人机目标点位
+int r_end,c_end,h_end;                         //无人机目标点位
 double energy_consu;                //当前能量消耗
-int n;                             //地图尺寸
+int n,m;                             //地图尺寸
+double T;                              //全局时间
 
 double Q[maxn][maxn][4][5];            //状态是x,y,direction,走下一步；
 bool vis[maxn][maxn];
@@ -41,11 +42,55 @@ class Environment{
     friend double move_t(int action,Environment &envir1);
     void get_map(){
         for(int i=0;i<n;++i)
-            for(int j=0;j<n;++j)
+            for(int j=0;j<m;++j)
                 cin>>altitude_map[i][j];
     }
     double get_altitude(int i,int j){
         return altitude_map[i][j];
+    }
+    void set_end(int r,int c,double h){
+        altitude_map[r][c]=h;
+    }
+    void add_map(int r,int c,double h){
+        altitude_map[r][c]=max(altitude_map[r][c],h);
+    }
+};
+class obstacle:public Environment{
+    public:
+    int count_state,count_dynamic;
+    struct state_obs{
+        int sr,sc;
+        double altitude;
+    }states[maxn];
+    struct Dynamic_obs{
+        int dr_start,dc_start,dr_end,dc_end;
+        int r,c,h;                                      //记录修改的静态altitude_map的值，方便改回来。
+        double d_altitude;
+        double d_speed;
+    }dynamics[10];
+    friend void add_dynamic_obs(obstacle &envir1);
+    friend void delete_dynamic_obs(obstacle &envir1);
+    void get_obstacle(){
+        cout<<"请输入静态障碍物个数：\n";
+        cin>>count_state;
+        for(int i=0;i<count_state;++i){
+            cout<<"请输入第"<<i+1<<"个静态障碍物的行、列与高度:\n";
+            cin>>states[i].sr>>states[i].sc>>states[i].altitude;
+        }
+        cout<<"请输入动态障碍物个数：\n";
+        cin>>count_dynamic;
+        for(int i=0;i<count_dynamic;++i){
+            cout<<"请输入第"<<i+1<<"个动态障碍物的起始行、起始列、终点行、终点列、高度和速度：\n";
+            cin>>dynamics[i].dr_start>>dynamics[i].dc_start>>dynamics[i].dr_end>>dynamics[i].dc_end>>dynamics[i].d_altitude>>dynamics[i].d_speed;
+        }
+    }
+    void set_state_map(){
+        for(int i=0;i<count_state;++i){
+            int r=states[i].sr;
+            int c=states[i].sc;
+            double h=states[i].altitude;
+            add_map(r,c,h);
+        }
     }
 };
 
@@ -69,7 +114,7 @@ class UAV{                            //无人机类
 };
 UAV flight;
 bool inside(int r,int c){
-    return r>=0&&r<n&&c>=0&&c<n;
+    return r>=0&&r<n&&c>=0&&c<m;
 }
 void try_set(){
     srand(time(0));
@@ -82,6 +127,7 @@ double get_later_Qmax(){
     return s;
 }
 void try_init(){
+    T=0;
     r=r_start;
     c=c_start;
     h=h_start;
@@ -93,12 +139,29 @@ double get_diatance(int action){         //得到相近格子间距离
         else
             return 1.414*width;         //斜向运动
 }	
-/*double get_level_consu(int direction,Environment &envir1){
-    if(direction==0){
 
+void add_dynamic_obs(obstacle &envir1){
+    for(int i=0;i<envir1.count_dynamic;++i){
+        double run_r=envir1.dynamics[i].dr_end-envir1.dynamics[i].dr_start;
+        double run_c=envir1.dynamics[i].dc_end-envir1.dynamics[i].dc_start;
+        double run_l=sqrt(run_c*run_c+run_r*run_r);
+        double dr=envir1.dynamics[i].d_speed*T*run_r/run_l;
+        double dc=envir1.dynamics[i].d_speed*T*run_c/run_l;
+        int ddr=(int)(dr/100);
+        int ddc=(int)(dc/100);
+        abs(ddr)>abs(run_r) ? (ddr=run_r):1;
+        abs(ddc)>abs(run_c) ? (ddc=run_c):1;
+ //       cout<<ddr<<ddc<<endl;
+        envir1.dynamics[i].r=envir1.dynamics[i].dr_start+ddr;
+        envir1.dynamics[i].c=envir1.dynamics[i].dc_start+ddc;
+        envir1.dynamics[i].h=envir1.get_altitude(envir1.dynamics[i].r,envir1.dynamics[i].c);
+        envir1.add_map(envir1.dynamics[i].r,envir1.dynamics[i].c,envir1.dynamics[i].d_altitude);
     }
-}*/
-// rewart=100/t;
+}
+void delete_dynamic_obs(obstacle &envir1){
+    for(int i=0;i<envir1.count_dynamic;++i)
+        envir1.set_end(envir1.dynamics[i].r,envir1.dynamics[i].c,envir1.dynamics[i].h);
+}
 double move_t(int action,Environment &envir1){
     double t=get_diatance(action)/flight.level_speed;
     int r_before=r,c_before=c,direction_before=direction;
@@ -117,35 +180,41 @@ double move_t(int action,Environment &envir1){
             c=(action*dr[direction])>0?c-1:c+1;
         }
     }
-    if(!inside(r,c)){
+    if(!inside(r,c)||envir1.get_altitude(r,c)>flight.max_altitude){
         r=r_before;
         c=c_before;
         direction=direction_before;
         return -1000;
     }
-  // energy_consu+=get_level_consu(direction,envir1);
     double temp=get_later_Qmax();
-    if(h>envir1.get_altitude(r,c)){
+    if(h>envir1.get_altitude(r,c)&&(r!=r_end||c!=c_end)){
         t=t;
+    }
+    else if(h>envir1.get_altitude(r,c)&&r==r_end&&c==c_end){
+        t+=(h-envir1.get_altitude(r,c))/flight.vertical_speed;
+        h=envir1.get_altitude(r,c);
     }
     else{
         t+=(envir1.get_altitude(r,c)-h)/flight.vertical_speed;
         h=envir1.get_altitude(r,c);
     }
+    T+=t;
     t=-t;
     return rate*(t+temp);
 }
 void show_result(Environment &envir1){
-    try_init();  
-/*    for(int i=0;i<n;++i)
-        for(int j=0;j<n;++j){
-            cout<<i<<j<<endl;
-            for(int k=0;k<4;++k)
+    for(int i=0;i<n;++i)
+    for(int j=0;j<m;++j){
+        cout<<i<<j<<endl;
+        for(int k=0;k<4;++k){
             for(int o=0;o<5;++o)
             cout<<Q[i][j][k][o]<<" ";
             cout<<endl;
-        }*/
-   while(r!=r_end||c!=c_end){
+        }
+        
+    }
+    try_init();  
+    while(r!=r_end||c!=c_end){
         double maxx=-10000000.0;
         int op;
         for(int i=0;i<5;++i)
@@ -158,7 +227,7 @@ void show_result(Environment &envir1){
     }
     vis[r_start][c_start]=true;
     for(int i=0;i<n;++i){
-        for(int j=0;j<n;++j){
+        for(int j=0;j<m;++j){
             if(vis[i][j])
             cout<<"1";
             else
@@ -167,21 +236,23 @@ void show_result(Environment &envir1){
         }
         cout<<endl;
     }
-  
 }
 
 int main(){
     Environment envir1;
+    obstacle envir2;
     cout<<"请输入地图数组的尺寸（每一格代表100m*100m）:\n";
-    cin>>n;
+    cin>>n>>m;
     cout<<"请输入无人机初始状态：x坐标，y坐标,h高度，以及朝向\n";
     cin>>r_start>>c_start>>h_start>>direction_start;
     cout<<"请上输入无人机目标点位\n";
-    cin>>r_end>>c_end;
+    cin>>r_end>>c_end>>h_end;
+    envir2.set_end(r_end,c_end,h_end);
     cout<<"现在请从左到右，从上到下，输入每个地图格的高度\n";
     // envir1.get_map();
+    envir2.get_obstacle();
+    envir2.set_state_map();
     try_set();
-    try_init();
     int episode=0;
     while(episode<5000){
         try_init();
@@ -201,9 +272,10 @@ int main(){
                     if(maxx==Q[r][c][direction][i])
                         op=i;
             }
-            double reward=move_t(actions[op],envir1);
+            add_dynamic_obs(envir2);
+            double reward=move_t(actions[op],envir2);
             Q[r_before][c_before][direction_before][op]=reward+(1-rate)*Q[r_before][c_before][direction_before][op];
-
+            delete_dynamic_obs(envir2);
             if(r==r_end&&c==c_end){
                 Q[r_before][c_before][direction_before][op]+=20;
                 cout<<episode<<" "<<j<<" "<<r_before<<" "<<c_before<<" "<<direction_before<<" "<<actions[op]<<" "<<Q[r_before][c_before][direction_before][op]<<endl;
@@ -211,7 +283,8 @@ int main(){
             }  
         }
     }
-    show_result(envir1);
+    show_result(envir2);
+    cout<<"用时"<<T<<endl;   
     cout<<"finish\n";
     return 0;
 }
