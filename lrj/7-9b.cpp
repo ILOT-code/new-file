@@ -1,3 +1,5 @@
+//状态压缩 位运算
+//图的建立
 #include<cstdio>
 #include<cstring>
 #include<cctype>
