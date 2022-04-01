@@ -29,7 +29,7 @@ int bfs(){
     q.push(start);
  //   int t=0;
     while(!q.empty()){
-        //printf("%d\n",++t);
+  //  printf("%d\n",++t);
         State u;
         memcpy(u,q.front(),sizeof(u));
         q.pop();
@@ -59,5 +59,4 @@ int main(){
     set_fact();
     printf("%d\n",bfs());
     return 0;
-
 }
