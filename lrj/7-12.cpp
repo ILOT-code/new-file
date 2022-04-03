@@ -36,8 +36,7 @@ int diff(int target){
     return cnt; 
 }
 int h(){
-    return min(diff(1), diff(2), diff(3));
-    //     min(min(diff(1),diff(2)),diff(3));
+    return min(min(diff(1),diff(2)),diff(3));
 }
 bool dfs(int d,int maxd){
     if(d+h()>maxd)  return false;
