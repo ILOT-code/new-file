@@ -1,56 +1,27 @@
-// UVa140 Bandwidth
+// UVa839 Not so Mobile
 // Rujia Liu
-#include<cstdio>
-#include<cstring>
-#include<vector>
-#include<algorithm>
+// 题意：输入一个树状天平，根据力矩相等原则判断是否平衡。采用递归方式输入，0表示中间结点
+// 算法：在“建树”时直接读入并判断，并且无须把树保存下来
+#include<iostream>
 using namespace std;
 
-const int maxn = 10;
-int id[256], letter[maxn];
+// 输入一个子天平，返回子天平是否平衡，参数W修改为子天平的总重量
+bool solve(int& W) {
+  int W1, D1, W2, D2;
+  bool b1 = true, b2 = true;
+  cin >> W1 >> D1 >> W2 >> D2;
+  if(!W1) b1 = solve(W1);
+  if(!W2) b2 = solve(W2);
+  W = W1 + W2;
+  return b1 && b2 && (W1 * D1 == W2 * D2);
+}
 
 int main() {
-  char input[1000];
-  while(scanf("%s", input) == 1 && input[0] != '#') {
-    // 计算结点个数并给字母编号
-    int n = 0;
-    for(char ch = 'A'; ch <= 'Z'; ch++)
-      if(strchr(input, ch) != NULL) {
-        id[ch] = n++;
-        letter[id[ch]] = ch;
-      }
-
-    // 处理输入
-    int len = strlen(input), p = 0, q = 0;
-    vector<int> u, v;
-    for(;;) {
-      while(p < len && input[p] != ':') p++;
-      if(p == len) break;
-      while(q < len && input[q] != ';') q++;
-      for(int i = p+1; i < q; i++) {
-        u.push_back(id[input[p-1]]);
-        v.push_back(id[input[i]]);
-      }
-      p++; q++;
-    }
-
-    // 枚举全排列
-    int P[maxn], bestP[maxn], pos[maxn], ans = n;
-    for(int i = 0; i < n; i++) P[i] = i;
-    do {
-      for(int i = 0; i < n; i++) pos[P[i]] = i; // 每个字母的位置
-      int bandwidth = 0;
-      for(int i = 0; i < u.size(); i++)
-        bandwidth = max(bandwidth, abs(pos[u[i]] - pos[v[i]])); // 计算带宽
-      if(bandwidth < ans) {
-        ans = bandwidth;
-        memcpy(bestP, P, sizeof(P));
-      }
-    } while(next_permutation(P, P+n));
-
-    // 输出
-    for(int i = 0; i < n; i++) printf("%c ", letter[bestP[i]]);
-    printf("-> %d\n", ans);
+  int T, W;
+  cin >> T;
+  while(T--) {
+    if(solve(W)) cout << "YES\n"; else cout << "NO\n";
+    if(T) cout << "\n";
   }
   return 0;
 }

@@ -1,9 +1,3 @@
-//水平运动时设x方向运动,若有x向风速x_windspeed
-//如果反向，则功率变为 level_power*(x_windspeed+level_speed)/level_speed
-//如果同向，则功率变为 level_power*(x_windspeed-level_speed)/level_speed
-//如果斜向运动，则功率为   level_power*（level_speed/1.414+x_windspeed+level_speed/1.414+y_windspeed)/level_speed
-//如果垂直向上  功率为    level_power*(vertical_speed+z_windspeed)/level_speed+mg*vertical_speed
-//如果垂直向下  功率为    ma*vertical_speed-level_power*(vertical_speed-z_windspeed)/level_speed
 
 #include <iostream>
 #include <cmath>
@@ -47,6 +41,10 @@ class Environment{
             for(int j=0;j<m;++j)
                 cin>>altitude_map[i][j];
     }
+    void get_temperature(){
+        cout<<"请输入温度\n";
+        cin>>temperature;
+    }
     double get_altitude(int i,int j){
         return altitude_map[i][j];
     }
@@ -56,6 +54,14 @@ class Environment{
     void add_map(int r,int c,double h){
         altitude_map[r][c]=max(altitude_map[r][c],h);
     }
+    double influ_tem(){
+        return abs(25-temperature)/25+1;
+    }
+    void get_wind(){
+        cout<<"请输入 x,y,z三个方向的风速\n";
+        cin>>r_windspeed>>c_windspeed>>z_windspeed;
+    }
+    
 };
 class obstacle:public Environment{
     public:
@@ -108,9 +114,12 @@ class UAV{                            //无人机类
     int max_turn=2;                //飞机最大转向角，规定为90°
     public:
     UAV(){
-        energy=1800.0;        level_power=1.0;  weight=0.6;
+        energy=1445512;        level_power=1.0;  weight=0.6;
         level_speed=15.0;     vertical_speed=6.0;
         max_altitude=1000.0;  min_altitude=10.0;
+    }
+    double get_energy(){
+        return energy;
     }
     friend double move_t(int action,Environment &envir1);
     friend void get_level_consu(int action,const Environment &envir1);
@@ -230,16 +239,7 @@ double move_t(int action,Environment &envir1){
     return rate*(gamma*t+temp);
 }
 void show_result(Environment &envir1){
-    for(int i=0;i<n;++i)
-    for(int j=0;j<m;++j){
-        cout<<i<<j<<endl;
-        for(int k=0;k<4;++k){
-            for(int o=0;o<5;++o)
-            cout<<Q[i][j][k][o]<<" ";
-            cout<<endl;
-        }
-        
-    }
+
     try_init();  
     while(r!=r_end||c!=c_end){
         double maxx=-10000000.0;
@@ -270,6 +270,7 @@ int main(){
     obstacle envir2;
     cout<<"请输入地图数组的尺寸（每一格代表100m*100m）:\n";
     cin>>n>>m;
+    envir2.get_wind();
     cout<<"请输入无人机初始状态：x坐标，y坐标,h高度，以及朝向\n";
     cin>>r_start>>c_start>>h_start>>direction_start;
     cout<<"请上输入无人机目标点位\n";
@@ -279,6 +280,7 @@ int main(){
     envir2.get_obstacle();
     envir2.set_state_map();
     envir2.set_end(r_end,c_end,h_end);
+    envir2.get_temperature();
     try_set();
     int episode=0;
     while(episode<50000){
@@ -311,8 +313,10 @@ int main(){
         }
     }
     show_result(envir2);
-    cout<<"用时"<<T<<endl;  
-    cout<<"消耗能量"<<energy_consu<<endl; 
+    cout<<"用时"<<T<<"秒"<<endl;
+    if(energy_consu*80.84*envir2.influ_tem()<flight.get_energy()) 
+        cout<<"消耗能量"<<energy_consu*80.84*envir2.influ_tem()<<"焦耳"<<endl; 
+    else cout<<"能量不足"<<endl;
     cout<<"finish\n";
     return 0;
 }
