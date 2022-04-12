@@ -1,6 +1,6 @@
 #include<cstdio>
 #include<algorithm>
-
+#include<cstring>
 using namespace std;
 const int maxn=5000+5;
 int n, x1[maxn], x2[maxn], y1[maxn], y2[maxn], x[maxn], y[maxn];
