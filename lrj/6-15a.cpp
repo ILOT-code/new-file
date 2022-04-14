@@ -32,5 +32,4 @@ int main(){
     }
     else printf("wrong");
     return 0;
-
 }
