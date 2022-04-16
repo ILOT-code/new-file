@@ -11,7 +11,7 @@ void draw(char*s,int &p,int row,int col,int w){
         draw(s,p,row,    col+w/2,w/2);
         draw(s,p,row,    col,    w/2);
         draw(s,p,row+w/2,col,    w/2);
-        draw(s,p,row+2/2,col+w/2,w/2);
+        draw(s,p,row+w/2,col+w/2,w/2);
     }
     else if(ch=='f'){
         for(int i=row;i<row+w;i++)
