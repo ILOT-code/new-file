@@ -7,7 +7,7 @@ const int maxn=100005;
 int n,m,ope,pos1,pos2,right[maxn],left[maxn];
 int main(){
     while(scanf("%d%d",&n,&m)){
-        int flag=1,sum=0,summ=0,cont=1;
+        int flag=1,sum=0,summ=0,cont = 1;
         for(int i=0;i<=n;++i){
             right[i]=i+1;
             left[i]=i-1;
