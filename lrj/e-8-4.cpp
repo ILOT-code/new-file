@@ -18,7 +18,7 @@ int main() {
 		}
 
 		ans[++k]=0;
-		printf("%s\n",ans+1);
+		printf("%s\n",ans);
 	}
 	return 0;
 }
