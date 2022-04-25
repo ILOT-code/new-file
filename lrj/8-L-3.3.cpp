@@ -1,6 +1,6 @@
 #include <iostream>
 using namespace std;
-strcct Point{
+struct Point{
     int x,y;
     int id;
     bool flag;     //flag=1是巨人
