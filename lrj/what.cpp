@@ -1,14 +1,15 @@
 #include<cstdio>
 #include<cstring>
+#include<queue>
 #include<algorithm>
 using namespace std;
 
 int main(){
-	int a,b;
-	for(int i = 0; i < 3; ++i){
-		int c = scanf("%d%d",&a,&b);
-		printf("%d\n",c);
-		printf("%d\n",~c);
+	for(int i =2 ;i >= 0; --i){
+		priority_queue<int> q;
+		q.push(i); q.push(i+1);
+		printf("%d \n", q.top());
 	}
+
 	return 0;
 }
