@@ -58,8 +58,8 @@ int main(){
             scanf("%d", &a[i]);
             b[n-1-i] = a[i];
         }
-
-        if(judge(a) || judge(b)) printf("YES\n");
+        //这种变换并不总是对的。需要结合对换具体考虑。
+        if(judge(a) || judge(b)) printf("YES\n"); 
         else printf("NO\n");
     }
     return 0;
