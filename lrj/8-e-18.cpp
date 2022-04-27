@@ -3,7 +3,7 @@
 #include<algorithm>
 using namespace std;
 
-const int maxn = 100000 + 1000;
+const int maxn = 100000 + 10;
 int n, a[maxn], left[maxn], right[maxn], stack[maxn];
 long long sum[maxn];
 bool first;
