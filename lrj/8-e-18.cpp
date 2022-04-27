@@ -1,6 +1,4 @@
 #include<cstdio>
-#include<cstring>
-#include<algorithm>
 using namespace std;
 
 const int maxn = 100000 + 10;
@@ -10,7 +8,6 @@ bool first;
 
 void init() {
 	for (int i = 1; i <= n; ++i) sum[i] = sum[i - 1] + a[i];
-	memset(stack, 0, sizeof(stack));
 	int top = 0;
 	for (int i = 1; i <= n; ++i) {
 		while (top > 0 && a[stack[top - 1]] >= a[i]) top--;
@@ -18,7 +15,6 @@ void init() {
 		stack[top++] = i;
 	}
 	top = 0;
-	memset(stack, 0, sizeof(stack));
 	for (int i = n; i >= 1; i--) {
 		while (top > 0 && a[stack[top - 1]] >= a[i]) top--;
 		right[i] = top == 0 ? n : (stack[top - 1] - 1);
