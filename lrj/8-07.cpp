@@ -10,19 +10,19 @@ void find() {
     set<int> s;
     int L = 0, R = 0;
     ans = 0;
-    while(R < n){
-        while(R < n && !s.count(A[R])) s.insert(A[R++]);
-        ans = max(ans, R-L);
+    while (R < n) {
+        while (R < n && !s.count(A[R])) s.insert(A[R++]);
+        ans = max(ans, R - L);
         s.erase(A[L++]);
     }
 }
 
-int main(){
+int main() {
     int T;
     scanf("%d", &T);
-    while(T--){
+    while (T--) {
         scanf("%d", &n);
-        for(int i = 0; i < n; ++i) scanf("%d", &A[i]);
+        for (int i = 0; i < n; ++i) scanf("%d", &A[i]);
         find();
         printf("%d\n", ans);
     }

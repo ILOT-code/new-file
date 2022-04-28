@@ -23,7 +23,7 @@ void init() {
 }
 
 void solve() {
-	long long  max_v = 0;
+	long long max_v = 0;
 	int r = 1, l = 1;
 	for (int i = 1; i <= n; ++i) {
 		long long  temp_v = (sum[right[i]] - sum[left[i] - 1]) * a[i];

@@ -23,8 +23,8 @@ int main() {
 	scanf("%d", &T);
 	while (T--) {
 		scanf("%d%d", &s, &n);
-		memset(flag,0,sizeof(flag));
-		memset(next,0,sizeof(next));
+		memset(flag, 0, sizeof(flag));
+		memset(next, 0, sizeof(next));
 		for (int i = 1; i <= n; ++i) {
 			scanf("%d", &a[i]);
 			if (flag[a[i]]) next[flag[a[i]]] = i;

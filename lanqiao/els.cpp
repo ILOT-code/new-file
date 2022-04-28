@@ -15,6 +15,7 @@ int zhi(int i,int t)
     }
     return ret;
 }
+
 int main()
 {
     scanf("%d",&n);

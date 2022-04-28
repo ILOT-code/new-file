@@ -1,4 +1,4 @@
-//简单思路 运算量过大 
+//简单思路 运算量过大
 /*
 #include <cstdio>
 #include <cstring>
@@ -15,19 +15,19 @@ int main(){
         }
     }
     printf("%d",t);
-} 
+}
 */
 #include <cstdio>
 using namespace std;
-int main(){
-    int D,I;
-    while(scanf("%d%d",&D,&I)){
-        int k=1;
-        for(int i=1;i<D;++i){
-            if(I%2) {k*=2;I=I/2+1;}
-            else {k=2*k+1;I=I/2;}
+int main() {
+    int D, I;
+    while (scanf("%d%d", &D, &I)) {
+        int k = 1;
+        for (int i = 1; i < D; ++i) {
+            if (I % 2) {k *= 2; I = I / 2 + 1;}
+            else {k = 2 * k + 1; I = I / 2;}
         }
-        printf("%d\n",k);
+        printf("%d\n", k);
     }
     return 0;
 }
