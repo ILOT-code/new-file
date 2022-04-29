@@ -25,7 +25,7 @@ bool try_insert(int s) {
 }
 void to_start(int k) {
 	if (k == 8) {
-		start[cnt][0] = 1; start[cnt][1] = 2; start[cnt][2] = 3; start[cnt][3] = 4; 
+		start[cnt][0] = 1; start[cnt][1] = 2; start[cnt][2] = 3; start[cnt][3] = 4;
 		for (int i = 4; i < 8; ++i) {
 			if (start[cnt][i] == 0) start[cnt][i] = start[cnt - 1][i];
 			else break;
@@ -60,23 +60,23 @@ int main() {
 	goal[0] = 1; goal[1] = 2; goal[2] = 3; goal[3] = 4; goal[4] = 5; goal[5] = 6; goal[6] = 7; goal[7] = 8;
 	bool flag1 = 1, flag2 = 0;
 	for (int i = 0; i < cnt; ++i) if (judge(i)) {
-		printf("%d ",i);
+		printf("%d ", i);
 		memset(vis2, 0, sizeof(vis2));
 		int front = 0, rear = 1;
-		for (int j = 0; j < 8; ++j) st[0][j] = start[i][j];
+		memcpy(st[0], start[i], sizeof(st[0]));
 		while (front < rear) {
 			State& s = st[front];
 			if (memcmp(goal, s, sizeof(s)) == 0) {flag2 = 1; break;}
 			for (int j = 0; j < 5; ++j) {
 				State& t = st[rear];
-				for(int k = 0; k < 8; ++k) t[k] = s[k];
+				memcpy(t, s, sizeof(s));
 				caozuo(rear, j);
 				if (try_insert(rear)) rear++;
 			}
 			front++;
 		}
-		if(flag2) {flag2 = 0;printf("yes\n") ;continue;}
-		else {flag1 = 0; printf("no\n");break;}
+		if (flag2) {flag2 = 0; printf("yes\n") ; continue;}
+		else {flag1 = 0; printf("no\n"); break;}
 	}
 	printf("%d", flag1);
 	return 0;
