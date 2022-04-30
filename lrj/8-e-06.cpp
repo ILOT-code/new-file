@@ -2,7 +2,7 @@
 #include<algorithm>
 using namespace std;
 
-const int maxn = 1000 + 5;
+const int maxn = 10000 + 5;
 int a[maxn], n, ans, str[4 * maxn];
 
 void sswap(int left, int right) {
