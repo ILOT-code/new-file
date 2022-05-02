@@ -6,6 +6,7 @@ using namespace std;
 const int maxn = 500 + 5;
 int a, b, m, n, d[maxn][maxn], dep[maxn];
 long long ans, V, S;
+
 int main() {
 	while (scanf("%d%d%d%d", &a, &b, &m, &n) == 4) {
 		ans = 0;
