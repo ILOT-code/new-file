@@ -2,19 +2,20 @@
 #include<cstring>
 #include<algorithm>
 using namespace std;
-using namespace std;
+
 const int maxn = 1000000 + 10;
+int vis[maxn], layer[maxn];
 struct node {
     int left, right, face;
 } q[maxn];
-int vis[maxn], layer[maxn];
+
 void del(int id) {
     vis[id] = 1;
     q[q[id].left].right = q[id].right;
     q[q[id].right].left = q[id].left;
 }
-int main()
-{
+
+int main() {
     int kase, t = 0;
     scanf("%d", &kase);
     int n, m;
