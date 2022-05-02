@@ -9,13 +9,9 @@ int gcd(int a,int b){
     return !b? a : gcd(b,a%b);
 }
 int main(){
-	for(int i = 0; i < 5; ++i){
-		int a, b;
-		scanf("%d%d", &a,&b);
-		int t = gcd(a,b);
-		printf("%d\n", t);
-	}
-
-
+	int d[10];
+	memset(d,0x3f,sizeof d);
+	for(int i = 0; i < 10; ++i)
+		printf("%d\n",d[i]);
 	return 0;
 }

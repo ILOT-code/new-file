@@ -1,9 +1,9 @@
 #include<cstdio>
 #include<cstring>
+
 const int maxn = 300 + 10;
 bool G[maxn][maxn];
 int n, m;
-
 
 bool judge(){
 	for(int i = 0; i < n; ++i)
@@ -16,8 +16,8 @@ bool judge(){
 			if(ok1 && ok2) return true;
 		}
 	return false;
-
 }
+
 int main() {
 	int T;
 	scanf("%d", &T);
