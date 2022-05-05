@@ -1,27 +1,14 @@
-typedef  struct  BiTNode{
+typedef  struct  BiTNode {
         int        data;
-        struct  BiTNode  *lchild,*rchild;
-}BiTNode,  *BiTree;
+        struct  BiTNode  *lchild, *rchild;
+} BiTNode,  *BiTree;
 
-typedef  int  VertexType;
-VertexType  Path[20];
-void  Solution(BiTree  T,int  targetSum){
-	static int cnt = 0;
-	static int sum = 0;
-	if(T == NULL) return;
-	Path[cnt++] = T->data;
-	sum += T->data;
-	if(sum > targetSum && !(T->lchild == NULL && T->rchild == NULL)){
-		cnt--;
-		sum -= T->data;
-		return;
-	}  //剪枝
-	if(sum == targetSum && T->lchild == NULL && T->rchild == NULL){
-		for(int i = 0; i < cnt; ++i) printf("%d ", Path[i]);
-		printf("\n");
-	}
-	Solution(T->lchild,targetSum);
-	Solution(T->rchild,targetSum);
-	cnt--;
-	sum -= T->data;
+int  Value(BiTree  root) {
+        if (root == NULL) return 0;
+        int value1 = root->data; 
+        if(root->lchild != NULL) value1 += Value(root->lchild->lchild) + Value(root->lchild->rchild);
+        if(root->rchild != NULL) value1 += Value(root->rchild->lchild) + Value(root->rchild->rchild);
+        int value2 = Value(root->lchild) + Value(root->rchild);
+        return value1 > value2 ? value1 : value2;
+
 }
