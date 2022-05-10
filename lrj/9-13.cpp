@@ -1,3 +1,4 @@
+//d[maxn][2]数组不开也可以。
 #include<cstdio>
 #include<iostream>
 #include<string>
