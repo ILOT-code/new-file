@@ -3,10 +3,8 @@
 #include<algorithm>
 using namespace std;
 
-const int maxn = 128;
 const int maxm = 11;
 int kase, n, m, vis[1 << maxm][1 << maxm], d[1 << maxm][1 << maxm], cnt[1 << maxm][1 << maxm];
-char objects[maxn][maxm + 100];
 
 int dp(int s, int a) {
     if (cnt[s][a] == 1) return 0;
@@ -23,23 +21,19 @@ int dp(int s, int a) {
     return ans;
 }
 
-void init() {
-    memset(cnt, 0, sizeof(cnt));
-    for (int i = 0; i < n; i++) {
-        int features = 0;
-        for (int f = 0; f < m; f++)
-            if (objects[i][f] == '1') features |= (1 << f);
-        for (int s = 0; s < (1 << m); s++)
-            cnt[s][s & features]++;
-    }
-}
-
 int main() {
+    char s[maxm + 10];
+    int stc;
     memset(vis, 0, sizeof(vis));
-    while (scanf("%d%d", &m, &n) == 2 && n) {
+    while (~scanf("%d%d", &m, &n)  && n) {
         ++kase;
-        for (int i = 0; i < n; i++) scanf("%s", objects[i]);
-        init();
+        memset(cnt, 0, sizeof(cnt));
+        for (int i = 0; i < n; ++i) {
+            scanf("%s", s);
+            stc = 0;
+            for (int j = 0; j < m; ++j)if (s[j] == '1') stc |= (1 << j);
+            for (int j = 0; j < 1 << m; ++j) cnt[j][j & stc]++;
+        }
         printf("%d\n", dp(0, 0));
     }
     return 0;
