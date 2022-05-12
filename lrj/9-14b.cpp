@@ -3,6 +3,7 @@
 //可以用记忆化搜索进行优化，使得复杂度变为O(n).
 #include<cstdio>
 #include<vector>
+#include<cstring>
 #include<algorithm>
 using namespace std;
 
@@ -23,6 +24,7 @@ void creat_tree(int u, int fa) {
 }
 
 int dp(int u, int k) {
+	if(d[u][k] != -1) return d[u][k];
 	if (k == 0) {
 		d[u][k] = 1;
 		for (int i = 0; i < G[u].size(); ++i)if (G[u][i] != -1) {
@@ -53,6 +55,7 @@ int main() {
 			G[u].push_back(v);
 			G[v].push_back(u);
 		}
+		memset(d,-1,sizeof(d));
 		creat_tree(0, -1);
 		printf("%d\n", min(dp(0, 0), dp(0, 2)));
 		scanf("%d", &n);

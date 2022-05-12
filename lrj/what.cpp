@@ -5,6 +5,7 @@
 #include<iostream>
 #include<cstring>
 #include<queue>
+#include<sstream>
 #include<algorithm>
 using namespace std;
 
@@ -26,7 +27,15 @@ void test_2() {
 	}
 }
 int main() {
-	test_1();
-	test_2();
+	int t;
+	string line;
+	char a[10],b[10];
+	scanf("%d",&t);
+	printf("%d\n",t);
+	getline(cin,line);
+	gets(b);
+	puts(a);
+	puts(b);
 	return 0;
+
 }
