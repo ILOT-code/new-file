@@ -23,12 +23,11 @@ int dp(int s, int a) {
 
 int main() {
     char s[maxm + 10];
-    int stc;
-    memset(vis, 0, sizeof(vis));
+    memset(vis, 0, sizeof(vis)); //实际上可以用循环来初始化，使得计算量由O(n^4)降为O(n^3)。
     while (~scanf("%d%d", &m, &n)  && n) {
         ++kase;
         memset(cnt, 0, sizeof(cnt));
-        for (int i = 0; i < n; ++i) {
+        for (int i = 0, stc = 0; i < n; ++i) {
             scanf("%s", s);
             stc = 0;
             for (int j = 0; j < m; ++j)if (s[j] == '1') stc |= (1 << j);
