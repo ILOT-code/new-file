@@ -17,7 +17,7 @@ int dp(int s, int a) {
     for (int k = 0; k < m; k++)
         if (!(s & (1 << k))) {
             int s2 = s | (1 << k), a2 = a | (1 << k);
-            if (cnt[s2][a2] >= 1 && cnt[s2][a] >= 1)  //如果cnt[s2][s2] > 0 而cnt[s2][a] < 0, 意味着在当前s,a下,k没有意义。
+            if (cnt[s2][a2] >= 1 && cnt[s2][a] >= 1)  //如果cnt[s2][s2] > 0 而cnt[s2][a] = 0, 意味着在当前s,a下,k没有意义。
                 ans = min(ans, max(dp(s2, a2), dp(s2, a)) + 1);
         }
     return ans;
