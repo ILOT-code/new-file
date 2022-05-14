@@ -6,6 +6,7 @@
 #include<cstring>
 #include<queue>
 #include<sstream>
+#include<vector>
 #include<algorithm>
 using namespace std;
 
@@ -27,15 +28,12 @@ void test_2() {
 	}
 }
 int main() {
-	int t;
-	string line;
-	char a[10],b[10];
-	scanf("%d",&t);
-	printf("%d\n",t);
-	getline(cin,line);
-	gets(b);
-	puts(a);
-	puts(b);
+	vector<int> a, b;
+	a.push_back(0); a.push_back(1);
+	b = a;
+	for(int i = 0; i < b.size(); ++i)
+		printf("%d", b[i]);
+
 	return 0;
 
 }
