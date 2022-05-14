@@ -49,8 +49,8 @@ void print_ans(int ans) {
 	printf("%d", team1.size());
 	for (int i = 0; i < team1.size(); i++) printf(" %d", team1[i] + 1);
 	printf("\n");
-
 }
+
 void dp() {
 	memset(d, 0, sizeof(d));
 	d[0][0 + n] = 1;
@@ -60,10 +60,9 @@ void dp() {
 				d[i + 1][j - diff[i] + n] = 1;
 			}
 	for (int ans = 0; ans <= n; ans++) {
-		if (d[cnt][ans + n]) { print_ans(ans); return; }
-		if (d[cnt][-ans + n]) { print_ans(-ans); return; }
+		if (d[cnt][ans + n]) {print_ans(ans); return;}
+		if (d[cnt][-ans + n]) {print_ans(-ans); return;}
 	}
-
 }
 
 int main() {
