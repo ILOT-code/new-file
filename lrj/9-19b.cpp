@@ -1,13 +1,9 @@
 #include<cstdio>
 #include<cstring>
-#include<iostream>
 #include<vector>
-#include<algorithm>
-#include<cmath>
 using namespace std;
 
-const int maxn = 1000 + 5;
-
+const int maxn = 100 + 5;
 int n, G[maxn][maxn], d[maxn][2 * maxn], color[maxn], diff[maxn], cnt;
 vector<int> team[maxn][2];
 

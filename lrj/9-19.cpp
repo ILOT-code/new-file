@@ -1,12 +1,12 @@
-//下面的DP有一个很明显的错误，不过我一直没发现。切不可随意下结论。
+//下面的DP有一个很明显的错误，不过我一直没发现。
+//但稍微冷静思考下就发现了错误。需要冷静。
 #include<cstdio>
 #include<cstring>
 #include<vector>
 #include<cmath>
 using namespace std;
 
-const int maxn = 1000 + 5;
-
+const int maxn = 100 + 5;
 int n, G[maxn][maxn], d[maxn], color[maxn], diff[maxn], cnt;
 vector<int> team[maxn][2];
 
