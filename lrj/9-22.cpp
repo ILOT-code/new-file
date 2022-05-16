@@ -36,9 +36,6 @@ int main() {
 							d[i + 1][(10 * j + k) % m] = min(d[i + 1][(10 * j + k) % m], d[i][j] + c[k]);
 		int h = n / 2, H, rem = 0, ans[maxn / 2 + 1];
 		for (; h; --h) if (d[h][0] < INF) break;
-		printf("%d\n", h);
-		printf("%d\n", d[4][1075]);
-		printf("%d\n", d[3][75]);
 		H = h;
 		while (h) {
 			for (int i = 9; i >= 0; --i) {
@@ -47,7 +44,6 @@ int main() {
 					ans[h--] = i;
 					n -= c[i];
 					rem = temp;
-					printf("%d %d %d\n", i, rem, n);
 					break;
 				}
 			}
