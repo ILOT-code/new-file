@@ -29,7 +29,7 @@ int main () {
         sumw[0] = books[0].w;
         for (int i = 1; i < n; ++i) sumw[i] = sumw[i - 1] + books[i].w;
         int t = 0;
-        dp[t][0][0] = 0;
+        dp[t][0][0] = 0; //本来dp[0][i][j]需要初始化为-1的，但j，k的限制使得免去了这个步骤。
         for (int i = 0; i < n - 1; ++i) {
             for (int j = 0; j <= sumw[i + 1] - sumw[0]; ++j)
                 for (int k = 0; k <= sumw[i + 1] - sumw[0] - j; ++k) dp[t ^ 1][j][k] = -1;
