@@ -37,7 +37,6 @@ int dfs(int u) {
 		if (edges[u][i].d == 1) ans = max(ans, 1 + dfs(v));
 	}
 	return ans;
-
 }
 bool read_data() {
 	bool have_data = false;
@@ -76,10 +75,10 @@ bool read_data() {
 	return have_data;
 }
 
-void dp(int i, int fa) {
+bool dp(int i, int fa) {
 	if (edges[i].empty()) {
 		f[i] = g[i] = 0;
-		return;
+		return true;
 	}
 	int f0 = 0, g0 = 0;
 	vector<UndirectedSon> sons;
@@ -87,7 +86,7 @@ void dp(int i, int fa) {
 		int v = edges[i][k].v;
 		int d = edges[i][k].d;
 		if (v == fa) continue;
-		dp(v, i);
+		if (!dp(v, i)) return false;
 		if (d == 0) sons.push_back(UndirectedSon(v, f[v], g[v]));
 		else if (d == 1) f0 = max(f0, 1 + f[v]);
 		else g0 = max(g0, 1 + g[v]);
@@ -95,7 +94,7 @@ void dp(int i, int fa) {
 	if (sons.empty()) {
 		f[i] = f0, g[i] = g0;
 		if (f0 + g0 > maxlen) f[i] = g[i] = INF;
-		return;
+		return f[i] < INF;
 	}
 	f[i] = g[i] = INF;
 	int s = sons.size();
@@ -120,14 +119,14 @@ void dp(int i, int fa) {
 		if (p < s) ff = max(ff, maxf[p] + 1);
 		if (ff + gg <= maxlen) g[i] = min(g[i], gg);
 	}
+	return f[i] < INF;
 }
 
 int main() {
 	while (read_data()) {
 		maxlen = 0;
 		for (int i = 1; i <= n; ++i) maxlen = max(maxlen, dfs(i));
-		dp(root,-1);
-		if (f[root] < INF) cout << maxlen + 1 << "\n";
+		if (dp(root,-1)) cout << maxlen + 1 << "\n";
 		else cout << maxlen + 2 << "\n";
 	}
 	return 0;
