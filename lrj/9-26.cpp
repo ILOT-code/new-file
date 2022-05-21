@@ -108,7 +108,7 @@ bool dp(int i, int fa) {
 	}
 	f[i] = g[i] = INF;
 	int s = sons.size();
-	
+
 	sort(sons.begin(), sons.end(), cmp_f);
 	int maxg[maxn];
 	maxg[s - 1] = sons[s - 1].g;
@@ -117,7 +117,7 @@ bool dp(int i, int fa) {
 		int ff = f0, gg = g0;
 		if (p > 0) ff = max(ff, sons[p - 1].f + 1);
 		if (p < s) gg = max(gg, maxg[p] + 1);
-		if (ff + gg <= maxlen) f[i] = min(f[i], ff);
+		if (ff + gg <= maxlen) {f[i] = min(f[i], ff); break;}
 	}
 
 	sort(sons.begin(), sons.end(), cmp_g);
@@ -128,7 +128,7 @@ bool dp(int i, int fa) {
 		int ff = f0, gg = g0;
 		if (p > 0) gg = max(gg, sons[p - 1].g + 1);
 		if (p < s) ff = max(ff, maxf[p] + 1);
-		if (ff + gg <= maxlen) g[i] = min(g[i], gg);
+		if (ff + gg <= maxlen) {g[i] = min(g[i], gg); break;}
 	}
 	return f[i] < INF;
 }
@@ -137,7 +137,7 @@ int main() {
 	while (read_data()) {
 		maxlen = 0;
 		for (int i = 1; i <= n; ++i) maxlen = max(maxlen, dfs(i));
-		if (dp(root,-1)) cout << maxlen + 1 << "\n";
+		if (dp(root, -1)) cout << maxlen + 1 << "\n";
 		else cout << maxlen + 2 << "\n";
 	}
 	return 0;
