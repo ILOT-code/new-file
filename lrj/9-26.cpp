@@ -1,3 +1,13 @@
+//f[i]如果是INF的话，意味着以i为根的树无论怎么变换。最长链都大于设定值.
+//设i的子节点w,如果有f[w]=INF,则必然失败。
+//如果f[w]全部合理，则以i为根的树中，可能出现的大于设定值的最长链一定要经过i。
+//Undirectedson(Uds)中储存的是i的所有无向边连接的孩子,设有n个。
+//对它们需要枚举无向边的各种方向的选取，为2^n.
+//但是，可以按照f[i]的大小把它们排序。f[i]的选取只有max(f0,Uds[k]+1),(k取0~n-1)n种可能。
+//设f[i]=max(f0,Uds[k]+1)已经选定，则g[i]越小越好。
+//g[i]=max(g0,Uds[k'(k'>k)],Uds[k''(k''<k)]),此时k'是一定会存在的，则最好的情况就是让k''消失。
+//于是就能求出此时g[i]的最小值。并在线性时间内枚举完毕全部可能。
+//于是有了下面的dp.
 #include<cstdio>
 #include<iostream>
 #include<string>
@@ -98,6 +108,7 @@ bool dp(int i, int fa) {
 	}
 	f[i] = g[i] = INF;
 	int s = sons.size();
+	
 	sort(sons.begin(), sons.end(), cmp_f);
 	int maxg[maxn];
 	maxg[s - 1] = sons[s - 1].g;
