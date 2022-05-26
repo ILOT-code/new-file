@@ -1,26 +1,4 @@
-0
-P Q
-R S
-0
-P Q
-R Q
-R S
-T S
-T U
-P U
-0
-P Q
-P Q
-P Q
-P Q
-1
-P Q
-Q R
-P R
-2
-P Q
-Q S
-R S
-P R
-P S
-Q R
+Case 1: 1 2 2
+Case 2: 3 1 4
+Case 3: 25 490 984
+Case 4: 19 47 122
