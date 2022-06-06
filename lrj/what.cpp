@@ -1,39 +1,7 @@
-//	freopen("C:\\Users\\lenovo\\Desktop\\test\\in.txt", "r", stdin);
-//	freopen("C:\\Users\\lenovo\\Desktop\\test\\out.txt", "w", stdout);
-#define _CRT_SECURE_NO_WARNINGS
-#include<cstdio>
-#include<iostream>
-#include<cstring>
-#include<queue>
-#include<sstream>
-#include<vector>
-#include<algorithm>
-using namespace std;
-
-const int N = 300;
-
-void test_1() {
-	int dp[N][N];
-	int dp_1[10][10];
-	for (int i = 0; i < 10; ++i) {
-		for (int j = 0; j < 10; ++j) printf("%d ", dp_1[i][j]);
-		printf("\n");
+for (int i = n - 1; i >= 0; --i)
+	for (int j = i + 1; j < n; ++j) {
+		dp[0][i][j] = min(dp[0][i + 1][j] + a[i + 1] - a[i], dp[1][i + 1][j] + a[j] - a[i]);
+		if (dp[0][j][j] >= b[i]) dp[0][i][j] = INF;
+		dp[1][i][j] = min(dp[0][i][j - 1] + a[j] - a[i], dp[1][i][j - 1] + a[j] - a[j - 1]);
+		if (dp[1][i][j] >= b[j]) dp[1][i][j] = INF;
 	}
-}
-void test_2() {
-	int dp_2[10][10];
-	for (int i = 0; i < 10; ++i) {
-		for (int j = 0; j < 10; ++j) printf("%d ", dp_2[i][j]);
-		printf("\n");
-	}
-}
-int main() {
-	vector<int> a, b;
-	a.push_back(0); a.push_back(1);
-	b = a;
-	for(int i = 0; i < b.size(); ++i)
-		printf("%d", b[i]);
-
-	return 0;
-
-}
