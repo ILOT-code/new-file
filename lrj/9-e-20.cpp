@@ -22,7 +22,7 @@ int solve() {
 			for (int k = i + 1; k <= na; ++k) {
 				s = max(A[k].s, s);
 				end = max(s + A[k].t, end);
-				dp[k][j][1] = min(dp[k][j][1], end);
+				dp[k][j][1] = min(dp[k][j][1], end);//另外的转移过程在前面已经包含进去了
 				s += 10, end += 10;
 			}
 			s = dp[i][j][1], end = 0;
