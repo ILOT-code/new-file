@@ -1,3 +1,5 @@
+//有a-b>=gcd(a,b),a-b<=a^b
+//gcd(a,b)=gcd(a,a-c)=c;
 #include<cstdio>
 #include<cstring>
 #include<algorithm>
