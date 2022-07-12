@@ -9,7 +9,7 @@ ull A, B, f[22][22][3][3][3][3];
 bool vis[22][22][3][3][3][3];
 
 ull dfs(int rev, int ori, int rl, int rr, int ol, int orr) {
-	if (vis[rev][ori][rl][rr][ol][orr])return f[rev][ori][rl][rr][ol][orr];
+	if (vis[rev][ori][rl][rr][ol][orr]) return f[rev][ori][rl][rr][ol][orr];
 	vis[rev][ori][rl][rr][ol][orr] = true;
 	ull &now = f[rev][ori][rl][rr][ol][orr]; now = 0;
 	if (!rev) {
@@ -30,7 +30,7 @@ int main() {
 		scanf("%llu%llu", &A, &B);
 		memset(vis, 0, sizeof(vis));
 		l = r = 0;
-		memset(lef, 0, sizeof(lef)), memset(rig, 0, sizeof(rig));
+		memset(lef, 0, sizeof(lef)); memset(rig, 0, sizeof(rig));
 		while (A) {lef[++l] = A % 10; A /= 10;}
 		while (B) {rig[++r] = B % 10; B /= 10;}
 		ull ans = dfs(r, 1, 1, 1, 1, 1);
