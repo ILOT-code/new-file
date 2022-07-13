@@ -14,8 +14,7 @@ ull dfs(int rev, int ori, int rl, int rr, int ol, int orr) {
 	ull &now = f[rev][ori][rl][rr][ol][orr]; now = 0;
 	if (!rev) {
 		if (ori == r + 1) return now = ((ol != 0) && (orr != 2));
-		if (ori > l) return now = (ol != 0);
-		else return now = 0;
+		else  return now = (ol != 0);
 	}
 	for (int i = max(rev == 1 ? 1 : 0, rl == 2 ? 0 : lef[rev]); i <= (rr == 0 ? 9 : rig[rev]); i++)
 		now += dfs(rev - 1, ori + 1,
