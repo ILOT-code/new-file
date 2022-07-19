@@ -8,7 +8,7 @@ typedef long long LL;
 
 LL n, f[101], ans;
 void init() {
-	f[1] = 1; f[2] = 1;
+	f[1] = 1; f[2] = 1; //f[w]指w位的数有几个，发现其也是满足斐波那契数列
 	for (int i = 3; i <= 90; i++) f[i] = f[i - 1] + f[i - 2];
 }
 
