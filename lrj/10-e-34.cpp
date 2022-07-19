@@ -1,3 +1,4 @@
+//数位dp,参考 https://www.luogu.com.cn/problem/solution/UVA12212
 #include<cstdio>
 #include<cstring>
 #include<algorithm>

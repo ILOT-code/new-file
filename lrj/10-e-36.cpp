@@ -1,3 +1,5 @@
+//数位dp, 每一种合法存在的二进制数都唯一对应一个数。
+//对于第i位及更低位的数，唯一的由last(上一位数)，equal(是否相等)确定。
 #include<cstdio>
 #include<cstring>
 #include<algorithm>
