@@ -10,7 +10,7 @@ long double g[maxn];
 int main() {
     int r, n;
     while (scanf("%d%d", &r, &n) && !(r == 0 && n == 0)) {
-        for (int i = 0; i < n; i++) {
+        for (int i = 0; i < n; ++i) {
             int a, b;
             scanf("%d%d", &a, &b);
             g[i] = (long double)a / b;
@@ -19,7 +19,7 @@ int main() {
         long double ans = 1.0, preans;
         do {
             dr *= r; up *= r;
-            for (int i = 0; i < n; i++) {
+            for (int i = 0; i < n; ++i) {
                 long long tmp = (long long)(g[i] * dr + eps);
                 g[i] -= (long double)tmp / dr;
                 up += tmp;
