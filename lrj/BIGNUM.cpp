@@ -100,15 +100,19 @@ struct BIGNUM {
 			}
 		return c;
 	}
+	bool operator<(const BIGNUM& rhs) const {
+		if (len != rhs.len) return len < rhs.len;
+		for (int i = len - 1; i >= 0; --i) {
+			if (num[i] < rhs.num[i]) return true;
+			if (num[i] > rhs.num[i]) return false;
+		}
+		return false;
+	}
 };
 
 int main() {
-	int T;
-	scanf("%d", &T);
-	while (T--) {
-		BIGNUM n;
-		cin >> n;
-		cout << n*(n - 1) / 2 + n*(n - 1)*(n - 2)*(n - 3) / 24 + 1 << endl;
-	}
+	BIGNUM n, m;
+	n = 10, m = 11;
+	printf("%d", m < n+2);
 	return 0;
 }
