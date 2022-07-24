@@ -1,6 +1,7 @@
 //https://www.luogu.com.cn/problem/solution/UVA1657
 //分析后知，就是两张表的变化。
-//step[i][j]表示表中(x,y)这个点在第几轮时变为1，那么之后它就一直为0了。
+//表变化过程中，格子中的数为除了0，1以外的任何数都没有区别，都不能使下一步变化。
+//则用step[i][j]表示表中(x,y)这个点在第几轮时变为1，那么之后它就一直为0了。
 #include<cstdio>
 #include<cstring>
 #include<algorithm>
