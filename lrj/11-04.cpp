@@ -27,6 +27,7 @@ void print(int u) {
         }
     printf("\n");
 }
+
 int main() {
     char s1[100], s2[100];
     while (~scanf("%d%d", &n, &m) && n) {
