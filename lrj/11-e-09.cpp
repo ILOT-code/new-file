@@ -83,5 +83,4 @@ int main() {
 
 		printf("%d\n", hungary());
 	}
-
 }

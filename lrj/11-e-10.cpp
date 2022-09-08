@@ -104,7 +104,6 @@ bool check(int mid) {
     return sum == g.maxFlow(s, t);
 }
 
-
 int main() {
     scanf("%d", &T);
     while (T--) {
