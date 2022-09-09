@@ -108,7 +108,7 @@ int main() {
     scanf("%d", &T);
     while (T--) {
         scanf("%d", &n);
-        int L = 0, R = 1, ans = 0;
+        int L = 0, R = 1;
         for (int i = 1; i <= n; ++i) scanf("%d", &army[i]), R += army[i];
         getchar();
         for (int i = 1; i <= n; ++i) {
@@ -121,12 +121,10 @@ int main() {
         }
         while (L < R) {
             int mid = (L + R) >> 1 ;
-            if (check(mid)) {
-                ans  = mid ;
-                L = mid + 1;
-            } else R = mid;
+            if (check(mid)) L = mid + 1;
+            else R = mid;
         }
-        printf("%d\n", ans);
+        printf("%d\n", L - 1);
     }
     return 0;
 }
