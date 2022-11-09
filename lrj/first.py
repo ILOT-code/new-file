@@ -1,21 +1,18 @@
-import pygame
-
-
-def main():
-    # 初始化导入的pygame中的模块
-    pygame.init()
-    # 初始化用于显示的窗口并设置窗口尺寸
-    screen = pygame.display.set_mode((800, 600))
-    # 设置当前窗口的标题
-    pygame.display.set_caption('大球吃小球')
-    running = True
-    # 开启一个事件循环处理发生的事件
-    while running:
-        # 从消息队列中获取事件并对事件进行处理
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                running = False
-
-
 if __name__ == '__main__':
-    main()
+
+    X_train, Y_train = load_data('train')
+    X_test, Y_test = load_data('t10k')
+    model_svc = svm.SVC(kernel='rbf', gamma='scale')
+    x = []
+    y = []
+    for i in range(30):
+        x_train = X_train[0:(i + 1) * 2000]
+        y_train = Y_train[0:(i + 1) * 2000]
+        model_svc.fit(x_train, y_train)
+        x.append((i + 1) * 2000)
+        y.append(test(X_test, Y_test, 2000, model_svc))
+    print(y)
+    fig = plt.figure()
+    ax1 = fig.add_subplot()
+    ax1.plot(x, y)
+    plt.show()
