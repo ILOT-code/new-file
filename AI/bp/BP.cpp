@@ -9,7 +9,7 @@ using namespace std;
 
 const double INF = 1000000;	//定义无穷大
 const int inputnum = 784;  	//输入层结点数
-const int hiddennum = 50;  	//隐藏层节点数
+const int hiddennum = 100;  	//隐藏层节点数
 const int outputnum = 10;  	//输出层节点数
 const double alpha = 0.35; 	//学习率
 
@@ -118,7 +118,7 @@ void training(int train_num) {
 		cal_delta();	//计算delta数组
 		backward();		//反向传播
 
-		if ((++cnt) % 10000 == 0) cout << "training image: " << cnt << endl;
+		if ((++cnt) % 10000 == 0) printf("has trainning %d images.\n", cnt);
 		if (cnt == train_num) break;		//达到规定次数，退出
 	}
 	end = clock();
