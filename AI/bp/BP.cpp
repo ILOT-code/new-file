@@ -9,9 +9,9 @@ using namespace std;
 
 const double INF = 1000000;	//定义无穷大
 const int inputnum = 784;  	//输入层结点数
-const int hiddennum = 100;  	//隐藏层节点数
+const int hiddennum = 200;  	//隐藏层节点数
 const int outputnum = 10;  	//输出层节点数
-const double alpha = 0.35; 	//学习率
+const double alpha = 0.25; 	//学习率
 
 int input[inputnum];      	 //输入,原始像素点映射到0或1
 int expected[outputnum];   	//期望输出，即label
