@@ -3,9 +3,9 @@
 #include<algorithm>
 using namespace std;
 
-const int maxn = 100000 + 10;
-int n, q;
-int h[maxn], fa[maxn][19], d[maxn], cnt, Log[maxn];
+const int maxn = 500000 + 10;
+int n, m;
+int h[maxn], fa[maxn][20], d[maxn], cnt, Log[maxn];
 
 struct Edge {
 	int v, nex;
@@ -38,10 +38,11 @@ int LCA(int x, int y) {
 
 int dist(int x, int y) {
 	int c = LCA(x, y);
-	return d[x] - d[c]+ d[y] - d[c];
+	return d[x] - d[c] + d[y] - d[c];
 }
+
 int main() {
-	scanf("%d%d", &n, &q);
+	scanf("%d%d", &n, &m);
 	for (int i = 1, u, v; i < n; ++i) {
 		scanf("%d%d", &u, &v);
 		add_edge(u, v), add_edge(v, u);
@@ -50,11 +51,14 @@ int main() {
 	for (int i = 3; i <= n; ++i) Log[i] =  Log[i / 2] + 1;
 	dfs(1, 0);
 
-	for (int i = 1, a, b, c, d; i <= q; ++i) {
-		scanf("%d%d%d%d", &a, &b, &c, &d);
-		int x = LCA(a, b), y = LCA(c, d);
-		if (dist(c, x) + dist(d, x) == dist(c, d) || dist(a, y) + dist(b, y) == dist(a, b)) printf("Y\n");
-		else printf("N\n");
+	for (int i = 1, a, b, c; i <= m; ++i) {
+		scanf("%d%d%d", &a, &b, &c);
+		int x = LCA(a, b), y = LCA(a, c), z = LCA(b, c);
+		if (y == z) printf("%d %d\n", x, d[a] + d[c] - 2 * d[y] + d[b] - d[x]);
+		else {
+			if (y == x) printf("%d %d\n", z, d[a] + d[b] - 2 * d[x] + d[c] - d[z]);
+			else printf("%d %d\n", y, d[a] + d[b] - 2 * d[x] + d[c] - d[y]);
+		}
 	}
 	return 0;
 }
