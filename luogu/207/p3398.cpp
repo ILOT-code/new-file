@@ -38,7 +38,7 @@ int LCA(int x, int y) {
 
 int dist(int x, int y) {
 	int c = LCA(x, y);
-	return d[x] - d[c]+ d[y] - d[c];
+	return d[x] - d[c] + d[y] - d[c];
 }
 int main() {
 	scanf("%d%d", &n, &q);
