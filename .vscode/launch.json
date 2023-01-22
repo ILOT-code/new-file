@@ -39,7 +39,7 @@
             "program": "cmd",
             "args": [
                 "/C",
-                "${workspaceFolder}\\bin\\${fileBasenameNoExtension}.exe"
+                "${fileDirname}\\bin\\${fileBasenameNoExtension}.exe"
             ],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}",
